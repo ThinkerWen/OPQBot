@@ -72,6 +72,7 @@ type IGroupMsg interface {
 	GetGroupInfo() GroupInfo
 	GetSenderNick() string
 	GetSenderUin() int64
+	GetSenderUid() string
 	ParseTextMsg() ITextMsg
 	ParsePicMsg() IPicMsg
 	ContainedPic() bool
@@ -255,6 +256,9 @@ func (e *EventStruct) ExcludeBot() IEvent {
 }
 func (e *EventStruct) GetSenderUin() int64 {
 	return e.CurrentPacket.EventData.MsgHead.SenderUin
+}
+func (e *EventStruct) GetSenderUid() string {
+	return e.CurrentPacket.EventData.MsgHead.SenderUid
 }
 func (e *EventStruct) GetSenderNick() string {
 	return e.CurrentPacket.EventData.MsgHead.SenderNick
