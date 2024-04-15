@@ -7,6 +7,7 @@ type IGroupManager interface {
 	GroupSystemMsgAction(MsgType int, MsgSeq, GroupCode int64) IGroupSystemMsgAction
 	RevokeMsg() IGroupManager
 	ToGUin(Uin int64) IGroupManager
+	ToGroupCode(Uin int64) IGroupManager
 	MsgSeq(MsgSeq int64) IGroupManager
 	MsgRandom(MsgRandom int64) IGroupManager
 	ProhibitedUser() IGroupManager
@@ -14,6 +15,7 @@ type IGroupManager interface {
 	ShutTime(ShutTime int) IGroupManager
 	RemoveUser() IGroupManager
 	RenameUserNickName(NickName string) IGroupManager
+	Pat(Uin int64) IGroupManager
 }
 type IGroupSystemMsgAction interface {
 	DoApi
@@ -97,6 +99,11 @@ func (b *Builder) ToGUin(Uin int64) IGroupManager {
 	return b
 }
 
+func (b *Builder) ToGroupCode(GroupCode int64) IGroupManager {
+	b.CgiRequest.GroupCode = &GroupCode
+	return b
+}
+
 func (b *Builder) ToUid(Uid string) IGroupManager {
 	b.CgiRequest.Uid = &Uid
 	return b
@@ -139,5 +146,12 @@ func (b *Builder) RenameUserNickName(NickName string) IGroupManager {
 	b.CgiRequest.OpCode = &code
 	b.CgiRequest.Nick = &NickName
 
+	return b
+}
+
+func (b *Builder) Pat(Uin int64) IGroupManager {
+	cmd := "SsoGroup.Op.Pat"
+	b.CgiCmd = &cmd
+	b.CgiRequest.Uin = &Uin
 	return b
 }
