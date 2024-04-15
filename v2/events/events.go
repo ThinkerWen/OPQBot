@@ -73,6 +73,7 @@ type IGroupMsg interface {
 	GetSenderNick() string
 	GetSenderUin() int64
 	GetSenderUid() string
+	GetToUin() int64
 	ParseTextMsg() ITextMsg
 	ParsePicMsg() IPicMsg
 	ContainedPic() bool
@@ -259,6 +260,9 @@ func (e *EventStruct) GetSenderUin() int64 {
 }
 func (e *EventStruct) GetSenderUid() string {
 	return e.CurrentPacket.EventData.MsgHead.SenderUid
+}
+func (e *EventStruct) GetToUin() int64 {
+	return e.CurrentPacket.EventData.MsgHead.ToUin
 }
 func (e *EventStruct) GetSenderNick() string {
 	return e.CurrentPacket.EventData.MsgHead.SenderNick
