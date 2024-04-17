@@ -13,7 +13,10 @@ type IMsg interface {
 	VoiceMsg(voice *File) IMsg
 	XmlMsg(xml string) IMsg
 	JsonMsg(json string) IMsg
+	MultiMsg(msgBody ...*MsgBody) IMsg
+	MarkDownMsg(text string) IMsg
 	At(uint ...int64) IMsg
+	Buttons(keys ...*Button) IMsg
 	DoApi
 }
 
@@ -106,6 +109,22 @@ func (b *Builder) JsonMsg(json string) IMsg {
 	b.CgiRequest.Content = &json
 	return b
 }
+func (b *Builder) MultiMsg(msgBodys ...*MsgBody) IMsg {
+	if b.CgiRequest == nil {
+		b.CgiRequest = &CgiRequest{}
+	}
+	cmd := "SsoUploadMultiMsg"
+	b.CgiCmd = &cmd
+	b.CgiRequest.MsgBodys = msgBodys
+	return b
+}
+func (b *Builder) MarkDownMsg(md string) IMsg {
+	if b.CgiRequest == nil {
+		b.CgiRequest = &CgiRequest{}
+	}
+	b.CgiRequest.Markdown = &md
+	return b
+}
 func (b *Builder) At(uin ...int64) IMsg {
 	if b.CgiRequest == nil {
 		b.CgiRequest = &CgiRequest{}
@@ -116,5 +135,13 @@ func (b *Builder) At(uin ...int64) IMsg {
 		}{Uin: &v}
 		b.CgiRequest.AtUinLists = append(b.CgiRequest.AtUinLists, qq)
 	}
+	return b
+}
+func (b *Builder) Buttons(keys ...*Button) IMsg {
+	if b.CgiRequest == nil {
+		b.CgiRequest = &CgiRequest{}
+	}
+	bc := map[string][]*Button{"Buttons": keys}
+	b.CgiRequest.Keyboard = append(b.CgiRequest.Keyboard, &bc)
 	return b
 }

@@ -84,6 +84,7 @@ type File struct {
 	FileId    int64  `json:"FileId"`
 	Height    int    `json:"Height"`
 	Width     int    `json:"Width"`
+	Url       string `json:"Url"`
 }
 
 func (b *Builder) DoUpload(ctx context.Context) (*File, error) {

@@ -24,27 +24,30 @@ type Builder struct {
 	CgiRequest *CgiRequest `json:"CgiRequest,omitempty"`
 }
 type CgiRequest struct {
-	LastUin    *int64  `json:"LastUin,omitempty"`
-	OpCode     *int    `json:"OpCode,omitempty"`
-	MsgSeq     *int64  `json:"MsgSeq,omitempty"`
-	MsgType    *int    `json:"MsgType,omitempty"`
-	GroupCode  *int64  `json:"GroupCode,omitempty"`
-	Uin        *int64  `json:"Uin,omitempty"`
-	LastBuffer *string `json:"LastBuffer,omitempty"`
-	CommandId  *int    `json:"CommandId,omitempty"`
-	FilePath   *string `json:"FilePath,omitempty"`
-	Base64Buf  *string `json:"Base64Buf,omitempty"`
-	FileUrl    *string `json:"FileUrl,omitempty"`
-	ToUin      *int64  `json:"ToUin,omitempty"`
-	ToType     *int    `json:"ToType,omitempty"`
-	Content    *string `json:"Content,omitempty"`
-	SubMsgType *int    `json:"SubMsgType,omitempty"`
-	Images     []*File `json:"Images,omitempty"`
-	Voice      *File   `json:"Voice,omitempty"`
-	Uid        *string `json:"Uid,omitempty"`
-	MsgRandom  *int64  `json:"MsgRandom,omitempty"`
-	BanTime    *int    `json:"BanTime,omitempty"`
-	Nick       *string `json:"Nick,omitempty"`
+	LastUin    *int64                  `json:"LastUin,omitempty"`
+	OpCode     *int                    `json:"OpCode,omitempty"`
+	MsgSeq     *int64                  `json:"MsgSeq,omitempty"`
+	MsgType    *int                    `json:"MsgType,omitempty"`
+	GroupCode  *int64                  `json:"GroupCode,omitempty"`
+	Uin        *int64                  `json:"Uin,omitempty"`
+	LastBuffer *string                 `json:"LastBuffer,omitempty"`
+	CommandId  *int                    `json:"CommandId,omitempty"`
+	FilePath   *string                 `json:"FilePath,omitempty"`
+	Base64Buf  *string                 `json:"Base64Buf,omitempty"`
+	FileUrl    *string                 `json:"FileUrl,omitempty"`
+	ToUin      *int64                  `json:"ToUin,omitempty"`
+	ToType     *int                    `json:"ToType,omitempty"`
+	Content    *string                 `json:"Content,omitempty"`
+	SubMsgType *int                    `json:"SubMsgType,omitempty"`
+	MsgBodys   []*MsgBody              `json:"MsgBodys,omitempty"`
+	Images     []*File                 `json:"Images,omitempty"`
+	Voice      *File                   `json:"Voice,omitempty"`
+	Markdown   *string                 `json:"Markdown,omitempty"`
+	Keyboard   []*map[string][]*Button `json:"Keyboard,omitempty"`
+	Uid        *string                 `json:"Uid,omitempty"`
+	MsgRandom  *int64                  `json:"MsgRandom,omitempty"`
+	BanTime    *int                    `json:"BanTime,omitempty"`
+	Nick       *string                 `json:"Nick,omitempty"`
 	AtUinLists []struct {
 		Uin *int64 `json:"Uin,omitempty"`
 	} `json:"AtUinLists,omitempty"`
@@ -52,6 +55,20 @@ type CgiRequest struct {
 		MsgSeq *int64 `json:"MsgSeq,omitempty"`
 		MsgUid *int64 `json:"MsgUid,omitempty"`
 	} `json:"ReplyTo,omitempty"`
+}
+type MsgBody struct {
+	Content *string `json:"Content,omitempty"`
+	Image   *File   `json:"Image,omitempty"`
+}
+type Button struct {
+	ID                     string `json:"Id"`
+	RenderDataLabel        string `json:"RenderDataLabel"`
+	RenderDataVisitedLabel string `json:"RenderDataVisitedLabel"`
+	RenderDataStyle        int    `json:"RenderDataStyle"`
+	ActionType             int    `json:"ActionType"`
+	ActionPermissonType    int    `json:"ActionPermissonType"`
+	ActionData             string `json:"ActionData"`
+	ActionUnsupportTips    string `json:"ActionUnsupportTips"`
 }
 
 func (b *Builder) BuildStringBody() (string, error) {

@@ -40,6 +40,19 @@ func main() {
 				if text == "reply" {
 					apiBuilder.New(apiUrl, event.GetCurrentQQ()).SendMsg().GroupMsg().ToUin(groupMsg.GetGroupUin()).TextMsg("回复").ReplyMsg(groupMsg.GetMsgSeq(), groupMsg.GetMsgUid()).Do(ctx)
 				}
+				if text == "md" {
+					btn1 := &apiBuilder.Button{
+						ID:                     "1",
+						RenderDataLabel:        "⬅️客户端内访问",
+						RenderDataVisitedLabel: "⬅️客户端内访问",
+						RenderDataStyle:        0,
+						ActionType:             0,
+						ActionPermissonType:    2,
+						ActionData:             "https://q.qq.com/",
+						ActionUnsupportTips:    "兼容文本",
+					}
+					apiBuilder.New(apiUrl, event.GetCurrentQQ()).SendMsg().GroupMsg().ToUin(groupMsg.GetGroupUin()).MarkDownMsg("#  #一号标题 \n").Buttons(btn1).Do(ctx)
+				}
 				if text == "pic" {
 					p, err := os.ReadFile("example/test.jpg")
 					if err != nil {
