@@ -40,6 +40,7 @@ type CgiRequest struct {
 	Content    *string `json:"Content,omitempty"`
 	SubMsgType *int    `json:"SubMsgType,omitempty"`
 	Images     []*File `json:"Images,omitempty"`
+	Voice      *File   `json:"Voice,omitempty"`
 	Uid        *string `json:"Uid,omitempty"`
 	MsgRandom  *int64  `json:"MsgRandom,omitempty"`
 	BanTime    *int    `json:"BanTime,omitempty"`
@@ -47,6 +48,10 @@ type CgiRequest struct {
 	AtUinLists []struct {
 		Uin *int64 `json:"Uin,omitempty"`
 	} `json:"AtUinLists,omitempty"`
+	ReplyTo *struct {
+		MsgSeq *int64 `json:"MsgSeq,omitempty"`
+		MsgUid *int64 `json:"MsgUid,omitempty"`
+	} `json:"ReplyTo,omitempty"`
 }
 
 func (b *Builder) BuildStringBody() (string, error) {

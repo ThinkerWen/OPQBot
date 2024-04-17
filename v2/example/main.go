@@ -37,6 +37,9 @@ func main() {
 						apiBuilder.New(apiUrl, event.GetCurrentQQ()).GroupManager().RevokeMsg().ToGUin(groupMsg.GetGroupUin()).MsgSeq(response.MsgSeq).MsgRandom(response.MsgTime).Do(ctx)
 					})
 				}
+				if text == "reply" {
+					apiBuilder.New(apiUrl, event.GetCurrentQQ()).SendMsg().GroupMsg().ToUin(groupMsg.GetGroupUin()).TextMsg("回复").ReplyMsg(groupMsg.GetMsgSeq(), groupMsg.GetMsgUid()).Do(ctx)
+				}
 				if text == "pic" {
 					p, err := os.ReadFile("example/test.jpg")
 					if err != nil {
@@ -49,6 +52,19 @@ func main() {
 					}
 					log.Debug(pic)
 					apiBuilder.New(apiUrl, event.GetCurrentQQ()).SendMsg().GroupMsg().ToUin(groupMsg.GetGroupUin()).PicMsg(pic).Do(ctx)
+				}
+				if text == "voice" {
+					v, err := os.ReadFile("example/test.amr")
+					if err != nil {
+						panic(err)
+					}
+
+					voice, err := apiBuilder.New(apiUrl, event.GetCurrentQQ()).Upload().GroupVoice().SetBase64Buf(base64.StdEncoding.EncodeToString(v)).DoUpload(ctx)
+					if err != nil {
+						panic(err)
+					}
+					log.Debug(voice)
+					apiBuilder.New(apiUrl, event.GetCurrentQQ()).SendMsg().GroupMsg().ToUin(groupMsg.GetGroupUin()).VoiceMsg(voice).Do(ctx)
 				}
 			}
 		}
